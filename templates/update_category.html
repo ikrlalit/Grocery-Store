@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Update Category{% endblock %}
+
+{% block extra_head %}
+<style>
+        .content-container {
+            height: 100vh;
+            margin-top: 70px;
+        }
+
+        .card {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: block;
+            margin: 0 auto;
+        }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-3" href="{{url_for('admin_dashboard')}}">GroceryStore</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('admin_dashboard')}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="content-container py-5">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Update Category</h5>
+            <form action="/category/{{category.category_id}}/update" method="POST">
+                <div class="mb-3">
+                  <label for="sectionName" class="form-label">Category Name</label>
+                  <input type="text" name="category_name" class="form-control" id="sectionName" value="{{category.category_name}}" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid name.
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+        {% if flag==0 %}
+        <div class="alert alert-danger mt-3" role="alert">
+          <p>Please enter a valid category name.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Online grocery shopping{% endblock %}
+{% block extra_head %}
+<style>
+        .social-icons {
+            margin-right: 8px; 
+          }
+
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            }
+
+
+        .card-title {
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: block;
+            margin: 0 auto;
+        }
+        .content-container {
+           margin-top: 60px;
+        }
+        .card {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .content-container {
+           margin-top: 150px;
+           margin-bottom:260px;
+        }
+        .back_to_shopping{
+          margin: 0 auto;
+        }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('user_dashboard')}}">GroceryStore</a>
+      <form class="d-flex">
+        <input class="form-control" type="search" placeholder="Search for products .." aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/cart">
+            <i class="bi bi-cart"><span class="cart-count">{{ total_cart_items }}</span></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+    <div class="container p-2 content-container ">
+        <div class="card">
+            <div class="card-body">
+            <h5 class="card-title">{{product_info.product_name}}</h5>
+            <img src="/static/img/{{ product_info.product_image }}" class="card-img-top mb-4" style="max-height: 150px; object-fit: cover;" alt="Product Image">
+            <div class="container"><p>{{product_info.product_description}}</p></div>
+            <div class="container">
+                <p><strong>Price:</strong> {{product_info.price}} {{product_info.unit}}</p>
+            </div>
+            <div class="container">
+                <p><strong>Manufacturing Date:</strong> {{product_info.mfg_date}}</p>
+                <p><strong>Expiry Date:</strong> {{product_info.expiry_date}}</p>
+            </div>
+        </div>
+        <a class="back_to_shopping" href="{{url_for('user_dashboard')}}"><strong><i class="bi bi-arrow-left"></i> Go Back To Shopping Now</strong></a>
+    </div>
+</div>
+
+{% endblock %}

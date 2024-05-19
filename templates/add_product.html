@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Add Products{% endblock %}
+
+{% block extra_head %}
+<style>
+        .card {
+            width: 500px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: block;
+            margin: 0 auto;
+        }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2 ">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-3" href="{{url_for('admin_dashboard')}}">Grocery Store</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('admin_dashboard')}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('summary')}}">Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container my-5">
+  <div class="card">
+      <div class="card-body">
+          <h5 class="card-title">Add a Product</h5>
+          <form action="/category/{{category_id}}/add_product" method="POST" enctype="multipart/form-data">
+              <div class="form-group mb-2">
+                <label for="prodcutName" class="form-label">Product Name</label>
+                <input type="text" name="product_name" class="form-control" id="productName" required>
+              </div>
+              {% if flag==0 %}
+                <p class="alert alert-danger" role="alert">Please enter a valid product name</p>
+              {% endif %}
+              {% if flag==1 %}
+                <p class="alert alert-danger" role="alert">Product already exist. Try adding product with a different name.</p>
+              {% endif %}
+              <div class="form-group mb-2">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" name="product_desc" id="description" rows="4"></textarea>
+              </div>
+              {% if flag==2 %}
+                <p class="alert alert-danger" role="alert">Please enter a valid product description.</p>
+              {% endif %}
+              <div class="form-group mb-2">
+                <label for="unit" class="form-label">Unit</label>
+                <select name="unit" class="form-control" id="unit" required>
+                  <option value="Rs/Kg">Rs/Kg</option>
+                  <option value="Rs/Litre">Rs/Litre</option>
+                  <option value="Rs/Dozen">Rs/Dozen</option>
+                  <option value="Rs/Gram">Rs/Gram</option>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+              <div class="form-group mb-2">
+                  <label for="nonNegativeInput" class="form-label">Price/Unit</label>
+                  <input type="number" name="price" class="form-control" id="price" min="0" required>
+                </div>
+              <div class="form-group mb-2">
+                <label for="nonNegativeInput" class="form-label">Quantity</label>
+                <input type="number" name="quantity" class="form-control" id="quantity" min="0" required>
+              </div>
+              <div class="form-group mb-2">
+                <label for="mfg_date" class="form-label">Manufacturing Date</label>
+                <input type="date" class="form-control" id="mfg_date" name="mfg_date" required>
+              </div>
+              <div class="form-group mb-3">
+                  <label for="expiry_date" class="form-label">Expiry Date</label>
+                  <input type="date" class="form-control" id="expiry_date" name="expiry_date" required>
+              </div>
+              <div class="form-group mb-3">
+                  <label class="mb-2" for="imageUpload">Upload Image</label>
+                  <input type="file" class="form-control-file" id="imageUpload" name="product_image" required accept="image/gif, image/jpeg, image/jpg, image/png">
+                </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block extra_head %}
+<style>
+        .card {
+            width: 35rem;
+            border: 1px solid #ccc;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .content-container {
+            margin-top: 100px;
+            margin-bottom: 70px;
+            height: 100vh;
+
+            }
+        .cartUpdateButton{
+            background-color: bisque;
+            text-decoration: none;
+            bottom: unset;
+        }
+        .cartUpdateButton {
+            border: none;
+            background-color: rgb(92, 155, 92);
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-size: large;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .cartUpdateButton:hover,
+        .cartUpdateButton:focus {
+            background-color: rgb(8, 86, 8);
+            cursor: pointer;
+        }
+        .q-display{
+            background-color: rgb(92, 155, 92);
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('user_dashboard') }}">GroceryStore</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('user_dashboard')}}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/cart">
+            <i class="bi bi-cart"><span class="cart-count">{{ total_cart_items }}</span></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<div class="content-container">
+<div class="card">
+    <div class="card-header p-3" style="border: 1px slategrey;"><h4><a href="{{ url_for('user_dashboard') }}" style="text-decoration: none; color: black;"><i class="bi bi-arrow-left"></i> Continue Shopping</a></h4></div>
+    <div>
+    {% if item_values|length > 0 %}
+    <table class="table table-striped table-hover">
+          <thead>
+              <tr >
+                <th>Items</th>
+                <th>Qunatity</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+          </thead>
+
+            <tbody>
+            {% for item in item_values %}
+              <tr>
+                <td>{{item[1]}}</td>
+                <td>
+                  <div style="display: flex;">
+                  <form action="/update_cart" method="post">
+                      <input type="hidden" name="item_id" value="{{item[0]}}">
+                      <input type="hidden" name="action" value="step_up">
+                  <button type="submit" class="cartUpdateButton">+</button>
+                </form>
+                <span class="q-display">{{item[2]}}</span>
+                <form action="/update_cart" method="post">
+                      <input type="hidden" name="item_id" value="{{item[0]}}">
+                      <input type="hidden" name="action" value="step_down">
+                  <button type="submit" class="cartUpdateButton">-</button>
+                </form></div>
+              </td>
+                <td>{{item[3]}}</td>
+                <td>{{item[2]*item[3]}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+      </table>
+      <div class="container"style="display: flex; justify-content: right;"><h5>Grand Total: {{total}}</h5></div>
+    </div>
+    <div class="card-footer p-3" style="display: flex; justify-content: center;border: 1px slategrey;">
+      <button class="btn btn-primary">Checkout</button>
+    </div>
+    {% else %}
+    <div class="px-5 pt-5 pb-1">Cart is empty. No product to show.</div>
+    {% endif %}    
+  </div>
+</div>
+{% endblock %}

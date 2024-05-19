@@ -1,0 +1,740 @@
+openapi: 3.0.0
+info:
+  title: GroceryStore API
+  description: |
+    The GroceryStore API is a comprehensive server based on the OpenAPI 3.0 specification. It provides a seamless and efficient way to manage categories and products in the GroceryStore. <br>The API is designed to streamline operations related to category and product management. The API allows various HTTP methods and offers a range of functionalities.<br><br> Furthermore, the GroceryStore API includes error handling mechanisms,with well-defined error codes and corresponding messages. This will makes it easy for developers to efficiently troubleshoot and resolve issues when interacting with the APIs.
+    <h2> Category Table Schema  </h2>
+    <hr>
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>category_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>category_name</td>
+        <td>String</td>
+        <td>Unique, Not Null</td>
+      </tr>
+    </tbody>
+    </table>
+    <hr>
+    <br>
+
+    <h2> Product Table Schema </h2>
+    <hr>
+    <table>
+      <thead>
+        <th>Column Name</th>
+        <th>Column Type</th>
+        <th>Constraints</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>product_id</td>
+        <td>Integer</td>
+        <td>Primary Key, Auto Increment</td>
+      </tr>
+      <tr>
+        <td>product_name</td>
+        <td>String</td>
+        <td>Not Null, Unique</td>
+      </tr>
+      <tr>
+        <td>product_description</td>
+        <td>String</td>
+        <td>Not Null</td>
+      </tr>  
+      <tr>
+        <td>unit</td>
+        <td>String</td>
+        <td>Not Null</td>
+      </tr>        
+      <tr>
+        <td>price</td>
+        <td>Float</td>
+        <td>Not Null</td>
+      </tr>       
+      <tr>
+        <td>quantity</td>
+        <td>Integer</td>
+        <td>Not Null</td>
+      </tr>      
+      <tr>
+        <td>mfg_date</td>
+        <td>Date</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>expiry_date</td>
+        <td>Date</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>product_image</td>
+        <td>String</td>
+        <td>Not Null</td>
+      </tr>
+      <tr>
+        <td>category_id</td>
+        <td>Integer</td>
+        <td>Foreign key (category.category_id), Not Null</td>
+      </tr> 
+    </tbody>
+    </table>
+    <hr>
+    <br>
+
+    <h2> Error Codes </h2>
+    <hr>
+    <table>
+      <thead>
+        <th>Resource</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>User</td>
+        <td>UBE001</td>
+        <td>Username is required</td>
+      </tr>
+      <tr>
+        <td>User</td>
+        <td>UBE002</td>
+        <td>User already exist</td>
+      </tr> 
+      <tr>
+        <td>User</td>
+        <td>UBE003</td>
+        <td>Invalid password. Whitespace are not allowed.</td>
+      </tr> 
+      <tr>
+        <td>User</td>
+        <td>UBE004</td>
+        <td>Role is required</td>
+      </tr>   
+      <tr>
+        <td>User</td>
+        <td>UBE005</td>
+        <td>Invalid role type</td>
+      </tr>         
+      <tr>
+        <td>Category</td>
+        <td>CBE001</td>
+        <td>Category name required </td>
+      </tr>
+      <tr>
+        <td>Category</td>
+        <td>CBE002</td>
+        <td>Category already exist</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE001</td>
+        <td>Product name required</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE002</td>
+        <td>Product already exist</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE003</td>
+        <td>Product description is required</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE004</td>
+        <td>Unit is required</td>
+      </tr> 
+      <tr>
+        <td>Product</td>
+        <td>PBE005</td>
+        <td>Product price is required</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE006</td>
+        <td>Product quantity is required</td>
+      </tr>
+      <tr>
+        <td>Product</td>
+        <td>PBE007</td>
+        <td>Manufacturing date is required</td>
+      </tr> 
+      <tr>
+        <td>Product</td>
+        <td>PBE008</td>
+        <td>Product expiry date is required</td>
+      </tr> 
+      <tr>
+        <td>Product</td>
+        <td>PBE009</td>
+        <td>Product Image is required</td>
+      </tr> 
+    </tbody>
+    </table>
+    <hr>
+    
+
+
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000
+paths:
+  /api/user/login:
+    post:
+      summary: User login
+      description: Authenticate user and issue an authentication token (JWT).
+      tags:
+        - User
+      requestBody:
+        description: User credentials for login
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: User's username
+                password:
+                  type: string
+                  format: password
+                  description: User's password
+      responses:
+        '200':
+          description: Authentication successful. Returns the authentication token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+        '401':
+          description: Authentication failed. Invalid credentials.
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/user:
+    post:
+      summary: Create new user
+      description: New user registration with their role
+      tags:
+        - "User"      
+      requestBody:
+        description: User data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  role:
+                    type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+  /api/category/{category_id}:
+    get:
+      summary: Display all the products in a category
+      description: Operation to read category resource by category_id
+      tags:
+        - "Category"
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: category
+                type: object
+                properties:
+                  category_id:
+                    type: integer
+                    example: 1
+                  category_name:
+                    type: string
+                    example: Fruits
+        '500':
+          description: Internal server error
+        '404':
+          description: Not found
+          
+
+    put:
+      summary: Update an existing category
+      description: Operation to update the category resource.
+      tags:
+        - "Category"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category_id:
+                    type: integer
+                    example: 1
+                  category_name:
+                    type: string
+                    example: fruits
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '401':
+          description: Unauthorized action
+        '403':
+          description: Access denied
+          
+    
+    delete:
+      summary: Delete a category by category_id
+      description: Operation to delete the category resource
+      tags:
+        - "Category"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully Deleted
+        '401':
+          description: Unauthorized action
+        '403':
+          description: Access denied          
+        '404':
+          description: Category not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/category:
+    post:
+      summary: Create a new category
+      description: Operation to add a new category to the category table
+      tags:
+        - "Category"
+      security:
+        - bearerAuth: []        
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_name:
+                  type: string
+      responses:
+        '201':
+          description: Successfully created
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '403':
+          description: Access denied                    
+          
+          
+  /api/product/{product_id}:
+    get:
+      summary: Display product details
+      description: Display product details by product_id
+      tags:
+        - "Product"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: product
+                type: object
+                properties:
+                  product_id:
+                    type: integer
+                    example: 1
+                  product_name:
+                    type: string
+                    example: Mango
+                  product_description:
+                    type: string
+                    example: Fresh and juicy mangos with awesome taste
+                  price:
+                    type: number
+                    format: float
+                    example: 10.5
+                  quantity:
+                    type: integer
+                    example: 10
+                  mfg_date:
+                    type: string
+                    format: date
+                    example: 2020-05-31
+                  expiry_date:
+                    type: string
+                    format: date
+                    example: 2025-01-30
+                  product_image:
+                    type: string
+                    format: binary
+                    example: mango.jpeg
+                  category_id:
+                    type: integer
+                    example: 1
+                    
+        '500':
+          description: Internal server error
+        '404':
+          description: Product not found
+          
+    put:
+      summary: Update an existing product
+      description: Operation to update the product resource.
+      tags:
+        - "Product"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - product_name
+                - product_description
+                - unit
+                - price
+                - quantity
+                - mfg_date
+                - expiry_date
+                - product_image
+              properties:
+                product_name:
+                  type: string
+                  default: None
+                  example: Mango
+                product_description:
+                  type: string
+                  example: Fresh and juicy mangos with awesome taste
+                unit:
+                  type: string
+                  example: Rs/Kg
+                price:
+                  type: number
+                  format: float
+                  example: 10.5
+                quantity:
+                  type: integer
+                  example: 10
+                mfg_date:
+                  type: string
+                  format: date
+                  example: 2020-05-31
+                expiry_date:
+                  type: string
+                  format: date
+                  example: 2025-01-30
+                product_image:
+                  type: string
+                  format: binary
+                  example: mango.jpeg
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product_id:
+                    type: integer
+                    example: 1
+                  product_name:
+                    type: string
+                    example: Mango
+                  product_description:
+                    type: string
+                    example: Fresh and juicy mangos with awesome taste
+                  price:
+                    type: number
+                    format: float
+                    example: 10.5
+                  quantity:
+                    type: integer
+                    example: 10
+                  mfg_date:
+                    type: string
+                    format: date
+                    example: 2020-05-31
+                  expiry_date:
+                    type: string
+                    format: date
+                    example: 2025-01-30
+                  product_image:
+                    type: string
+                    format: binary
+                    example: mango.jpeg
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '401':
+          description: Unauthorized action
+        '403':
+          description: Access denied          
+    
+    delete:
+      summary: Delete a product by product_id
+      description: Operation to delete the product resource
+      tags:
+        - "Product"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: product_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully Deleted
+        '401':
+          description: Unauthorized action
+        '403':
+          description: Access denied
+        '404':
+          description: Product not found
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+
+  /api/{category_id}/product:
+    post:
+      summary: Add a product 
+      description: Operation to add a new product by taking category_id
+      tags:
+        - "Product"
+      security:
+        - bearerAuth: []    
+      parameters:
+        - in: path
+          name: category_id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - product_name
+                - product_description
+                - unit
+                - price
+                - quantity
+                - mfg_date
+                - expiry_date
+                - product_image
+              properties:
+                product_name:
+                  type: string
+                  default: None
+                  example: Mango
+                product_description:
+                  type: string
+                  example: Fresh and juicy mangos with awesome taste
+                unit:
+                  type: string
+                  example: Rs/Kg
+                price:
+                  type: number
+                  format: float
+                  example: 10.5
+                quantity:
+                  type: integer
+                  example: 10
+                mfg_date:
+                  type: string
+                  format: date
+                  example: 2020-05-31
+                expiry_date:
+                  type: string
+                  format: date
+                  example: 2025-01-30
+                product_image:
+                  type: string
+                  format: binary
+                  example: mango.jpeg
+      responses:
+        '201':
+          description: Successfully added
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '403':
+          description: Access denied
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      
+        
