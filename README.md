@@ -35,14 +35,14 @@ Authentication & authorization for API endpoints are handled with **Flask-JWT-Ex
 Detailed API documentation is available in the openapi.yaml file.
 
 ---
-## 🏗 Architecture & Features
+## ✨ Architecture & Features
 
 The application follows the **MVC (Model–View–Controller)** architecture:  
 - **Model** – Python classes mapped to SQLite database tables using Flask-SQLAlchemy  
 - **View** – HTML/CSS with Bootstrap for the frontend  
 - **Controller** – Python + Flask for request handling and application logic  
 
-### ✨ Features
+### Features
 
 #### Authentication
 - User and Admin signup/login
