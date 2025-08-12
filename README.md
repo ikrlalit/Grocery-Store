@@ -1,7 +1,8 @@
 
 # Grocery Store
 
-**Grocery Store** is a multi-user web application that allows customers to explore and purchase products, while sellers can register and list their own items. The application also provides **REST APIs** for products, categories, and users, designed in accordance with **OpenAPI specifications**.
+**Grocery Store** is a multi-user web application that allows customers to explore and purchase products, while sellers can register and list their own items. 
+The application also provides **REST APIs** for products, categories, and users, designed in accordance with **OpenAPI specifications**.
 
 ---
 
