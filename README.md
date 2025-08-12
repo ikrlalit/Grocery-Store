@@ -20,7 +20,7 @@
   - **Flask-JWT-Extended** – Token-based authentication for API endpoints  
 - **Matplotlib** – Visualizing most demanded products and categories
 
---
+---
 
 ## 📡 API Design
 
@@ -83,5 +83,5 @@ The application follows the **MVC (Model–View–Controller)** architecture:
 6. Run the application:
    ```bash
    python app.py
-
+---
 **Video Demo**: [here](https://youtu.be/dFpiXiBLxGQ)
