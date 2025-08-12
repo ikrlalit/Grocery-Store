@@ -32,7 +32,7 @@ The REST APIs, built using **Flask-RESTful**, perform CRUD operations on:
 Authentication & authorization for API endpoints are handled with **Flask-JWT-Extended** using **JSON Web Tokens (JWT)**.  
 
 📄 Detailed API documentation is available in the openapi.yaml file.
-
+---
 ## 🏗 Architecture & Features
 
 The application follows the **MVC (Model–View–Controller)** architecture:  
