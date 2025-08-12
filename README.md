@@ -1,43 +1,87 @@
 
 # Grocery Store
 
+**Grocery Store** is a multi-user web application that allows customers to explore and purchase products, while sellers can register and list their own items. The application also provides **REST APIs** for products, categories, and users, designed in accordance with **OpenAPI specifications**.
 
-The grocery store is a multi-user web application that allows users to explore and buy listed products. Similarly, sellers can register and list their products on it. The Rest APIs fro products, categories and user are also developed which follows the OpenAPI specifications.
+---
 
-## Technologies Used:
-* Python – Python is the primary programming language used for developing app
-* HTML/CSS – For creating web pages and styling them
-* Jinja2 – Used for displaying data dynamically in HTML pages
-* Bootstrap – It is a CSS framework, we used for making pages visually appealing
-* SQLite- Serves as the database for the application
-* Python Flask – Serves as the web framework for the app, it utilizes the following libraries. 
-* Flask-Restful – Used for developing Restful APIs
-    * Flask-SQLAlchemy – For creating models that allows application to interact with database
-    * Flask-CORS – Used for allowing cross-origin requests for APIs
-    * Flask-Login – Used for implementing login functionality to the application
-    * Flask-JWT-Extended – Used for implementing token-based authentication for API end points
-* Matplotlib- To create charts of the most demanded products and categories
+## 🚀 Technologies Used
 
-## API Design:
-The APIs are designed using Flask-Restful for performing CRUD on product, category, and user tables. We used the flask-jwt-extended package for implementing authentication and authorization on API endpoints. For more details, please refer to the openapi.yaml file.
+- **Python** – Primary programming language for application development  
+- **HTML/CSS** – Structure and styling of web pages  
+- **Jinja2** – Dynamic data rendering in HTML templates  
+- **Bootstrap** – CSS framework for responsive and visually appealing designs  
+- **SQLite** – Application database  
+- **Flask** – Web framework for the application, with the following extensions:
+  - **Flask-RESTful** – Building RESTful APIs
+  - **Flask-SQLAlchemy** – ORM for database interaction
+  - **Flask-CORS** – Enabling cross-origin requests
+  - **Flask-Login** – User authentication and session management
+  - **Flask-JWT-Extended** – Token-based authentication for API endpoints  
+- **Matplotlib** – Visualizing most demanded products and categories
 
-## Architecture and Features:
-The application follows the standard MVC architecture. The View of the application is created using HTML/CSS, and Bootstrap. The Controller is created using Python and Flask. Models are the Python classes that map with SQLite database tables using the Flask-SQLAlchemy ORM library.
-The features of the application are as follows-
-* Signup and Login for User and Admin
-* An admin can view, create, update, and delete a product or category
-* A user can view, add, increase/ decrease the item quantity, or delete a product from the cart. Users can search for a product or category and add it to the cart
-* Search feature is implemented using FTS5 and allow searching by product name, product description, or category name
-* APIs for performing CRUD on product, category, and user tables. The endpoints are protected using JSON Web Token 
-* Frontend as well as backend validation on APIs of input fields before storing/ selecting from the database
+--
 
-## Instructions to Run the Application
-* Open your terminal
-* cd into the directory where app.py is located
-* Use ```python3 -m venv .venv``` to create the virtual environment
-* Once created use ```source .venv/bin/activate``` this will activate virutal environment
-* Next execute the ```pip install -r requirements.txt``` this will install all the packages required for running the application
-* Finally run the app using ```python app.py```
+## 📡 API Design
+
+The REST APIs, built using **Flask-RESTful**, perform CRUD operations on:
+- **Product**
+- **Category**
+- **User** tables  
+
+Authentication & authorization for API endpoints are handled with **Flask-JWT-Extended** using **JSON Web Tokens (JWT)**.  
+
+📄 Detailed API documentation is available in the [`openapi.yaml`](./openapi.yaml) file.
+
+## 🏗 Architecture & Features
+
+The application follows the **MVC (Model–View–Controller)** architecture:  
+- **Model** – Python classes mapped to SQLite database tables using Flask-SQLAlchemy  
+- **View** – HTML/CSS with Bootstrap for the frontend  
+- **Controller** – Python + Flask for request handling and application logic  
+
+### ✨ Features
+
+#### Authentication
+- User and Admin signup/login
+- Token-based authentication for APIs
+
+#### Admin
+- Create, view, update, and delete products or categories
+
+#### User
+- Browse products and categories
+- Add products to cart, update quantities, or remove items
+- Search products/categories using **FTS5** by:
+  - Product name
+  - Product description
+  - Category name
+
+#### API Security
+- Frontend & backend validation before database operations
+- Protected endpoints using JWT
+
+---
+
+## ⚙️ How to Run the Application
+
+1. Clone the project:
+   ```bash
+   git clone https://github.com/ikrlalit/Grocery-Store.git
+2. Next move to project directory:
+   ```bash
+   cd Grocery-Store
+3. Create a virtual environment:
+   ```bash
+   python3 -m venv .venv
+4. Activate the virtual environment:
+   ```bash
+   source .venv/bin/activate
+5. Install dependecies:
+   ```bash
+   pip install -r requirements.txt
+6. Run the application:
+   ```bash
+   python app.py
 
 **Video Demo**: [here](https://youtu.be/dFpiXiBLxGQ)
-
